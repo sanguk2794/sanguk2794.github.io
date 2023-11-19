@@ -1,15 +1,15 @@
 # SITE CONFIGURATION
-baseurl: "/Type-on-Strap"
+baseurl: "/sanguk2794"
 url: "https://sanguk2794.github.io"
 
 # THEME-SPECIFIC CONFIGURATION
-title: My Blogs                                         # site's title
+title: 잘하고 싶다                                        # site's title
 description: "A website with blog posts and pages"      # used by search engines
 avatar:                                                 # Empty for no avatar in navbar
 favicon: assets/favicon.ico                             # Icon displayed in the tab
 
 # Header and footer text
-header_text: My Blogs  # Change Blog header text
+header_text: 잘하고 싶다  # Change Blog header text
 header_feature_image: assets/img/header/triangular.jpeg
 header_feature_image_responsive: true
 footer_text: >
