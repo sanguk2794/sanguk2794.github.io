@@ -18,7 +18,7 @@ tags: [Java]
 
 #### 2. API (Application Programming Interface)
 자바 API는 자바 플랫폼에서 제공하는 라이브러리와 클래스들의 모음이다. 이 API를 통해 개발자는 자주 사용되는 기능을 구현할 때 필요한 여러 가지 도구와 클래스들을 활용할 수 있다. 
-자바 API는 풍부한 기능을 제공하여 생산성을 높이고 코드의 재사용성을 촉진한다.
+자바 API는 풍부한 기능을 제공하여 생산성을 높이고 코드의 재사용성을 촉진한다.  
 
 --- 
 
@@ -35,7 +35,7 @@ Java SE에 부가하여, 웹 애플리케이션 프로그래밍에서 사용하�
 
 #### 3. Java ME (Micro Edition)
 자원이 제한된 환경에서 동작하는 모바일 기기 및 임베디드 시스템용으로 개발된 플랫폼이다. 스마트폰을 주로 사용하게 되면서 요즘에는 잘 사용되지 않는다.
-CLDC(Connected Limited Device Configuration), MIDP(Mobile Information Device Profile) 등 모바일 및 임베디드 환경을 위한 구성 요소를 제공한다.
+CLDC(Connected Limited Device Configuration), MIDP(Mobile Information Device Profile) 등 모바일 및 임베디드 환경을 위한 구성 요소를 제공한다.  
 
 ---
 #### ▶ Reference
