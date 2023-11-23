@@ -10,12 +10,29 @@ tags: [Java]
 ---
 
 ## 1. 클래스 로더 (ClassLoader)
-클래스로더는 JRE의 일부로써 런타임에 컴파일 된 자바의 클래스 파일을 동적으로 로드하는 역할을 담당한다.
+클래스 로더는 JRE의 일부로써 런타임에 컴파일 된 자바의 클래스 파일을 동적으로 로드하는 역할을 담당한다.
 자바 클래스들은 시작 시 한번에 로드되지 않고 애플리케이션에서 필요할 때 로드된다.
+
+![ClassLoader(https://drive.google.com/uc?export=view&id=1KejKkdjaIe_4Slo0NqsbOHRmu0cTasL9)
+
+참조 : [[1주차] JVM은 무엇이며 자바 코드는 어떻게 실행하는 것인가.](https://catsbi.oopy.io/df0df290-9188-45c1-b056-b8fe032d88ca)
 
 ---
 
-## 2. Java 8 이전
+## 2. 클래스 로더의 동작 방식
+계층 구조를 바탕으로 클래스 로더끼리 로드를 위임하는 구조로 동작한다. 클래스를 로드할 때 먼저 상위 클래스 로더를 확인하여 상위 클래스 로더에 있다면 해당 클래스를 사용하고 없다면 로드를 요청받은 클래스로더가 클래스를 로드한다.
+
+- JVM의 메소드 영역에 클래스가 로드되어 있는지 확인한다. 만일 로드되어 있는 경우 해당 클래스를 사용한다.
+- 메소드 영역에 클래스가 로드되어 있지 않을 경우, 시스템 클래스 로더에 클래스 로드를 요청한다.
+- 시스템 클래스 로더는 확장 클래스 로더에 요청을 위임한다.
+- 확장 클래스 로더는 부트스트랩 클래스 로더에 요청을 위임한다.
+- 부트스트랩 클래스 로더는 부트스트랩 클래스패스에 해당 클래스가 있는지 확인한다. 클래스가 존재하지 않는 경우 확장 클래스 로더에게 요청을 넘긴다.
+- 확장 클래스 로더는 확장 클래스패스에 해당 클래스가 있는지 확인한다. 클래스가 존재하지 않을 경우 애플리케이션 클래스 로더에게 요청을 넘긴다.
+- 애플리케이션 클래스 로더는 시스템 클래스패스에 해당 클래스가 있는지 확인한다. 클래스가 존재하지 않는 경우 `ClassNotFoundException`을 발생시킨다.
+
+--- 
+
+## 3. Java 8 이전 구조
 자바 클래스 로더는 모듈 시스템이 도입되기 이전인 자바 8 이전 버전과 자바 9 이후 버전의 구조가 다르다. 자바 8 이하 버전에서의 클래스 로더는 다음의 요소들로 구성된다.
 - 부트스트랩 클래스 로더
 - 확장 클래스 로더
@@ -27,7 +44,7 @@ tags: [Java]
 #### 1. 부트스트랩 클래스 로더 (Bootstrap ClassLoader)
 부트스트랩 클래스 로더는 최상위 클래스 로더이며, 원시 클래스 로더(Primordial classloader)라고도 불린다.
 
-이 클래스 로더는 JVM 시작 시 가장 최초로 실행되어 최소한의 자바 클래스와 `${JAVA_HOME}/jre/lib`에 위치한 자바 런타임 코어 클래스를 로드한다.
+이 클래스 로더는 JVM 시작 시 가장 최초로 실행되어 JVM 실행을 위한 자바 클래스와 `${JAVA_HOME}/jre/lib`에 위치한 자바 런타임 코어 클래스 등을 로드한다.
 해당 코어 클래스 목록은 `sun.boot.class.path`라는 자바 내부적으로 사용되는 환경 변수를 통해 정의된다.
 
 ##### 1. 코드
@@ -40,7 +57,7 @@ public class Main {
 ```
 
 ##### 2. 결과
-JDK 1.8.0_291 버전에서 해당 코드를 실행하면 다음과 같은 실행 결과를 반환한다. 이 결과는 JDK 버전 및 환경에 따라 다르다.
+이 결과는 JDK 버전 및 환경에 따라 다르다.
 
 ```bash
 # In JDK 8
@@ -64,7 +81,8 @@ Boot Class Path: null
 
 하지만, 같은 코드를 자바 9 이상의 버전에서는 `null`을 반환할 뿐이다. 그 이유는 자바 플랫폼의 개선 및 보안 강화와 관련이 있다.
 부트 클래스 패스를 조작할 수 있기에 특정 클래스들을 변경하거나 재정의하는 데 사용될 수 있어 보안과 호환성 문제를 발생시킬 여지가 존재한다.
-그렇기에, 이러한 옵션을 제거하고 --patch-module 옵션을 도입함으로써 모듈 시스템을 통해 더욱 안전하고 유연한 클래스 패스 구성이 가능하도록 구조를 변경했다.
+
+그렇기에, 이러한 옵션을 제거하고 `--patch-module` 옵션을 도입함으로써 모듈 시스템을 통해 더욱 안전하고 유연한 클래스 패스 구성이 가능하도록 구조를 변경한 것이다.
 
 > The boot class path has been mostly removed in this release. 
 > The java -Xbootclasspath and -Xbootclasspath/p options have been removed. 
@@ -92,8 +110,8 @@ static class ExtClassLoader extends URLClassLoader {
 ---
 
 #### 3. 애플리케이션 클래스 로더 (Application Classloader)
-애플리케이션 클래스로더는 `-classpath`나 JAR 파일 안에 있는 Manifest 파일의 classpath 속성 값으로 지정된 폴더에 있는 클래스를 로딩한다.
-확장 클래스로더와 마찬가지로 자바로 구현되어 있다. 개발자가 애플리케이션 구동을 위해 직접 작성한 대부분의 클래스는 이 애플리케이션 클래스로더에 의해 로딩된다.
+애플리케이션 클래스 로더는 `-classpath`나 JAR 파일 안에 있는 Manifest 파일의 classpath 속성 값으로 지정된 폴더에 있는 클래스를 로딩한다.
+확장 클래스 로더와 마찬가지로 자바로 구현되어 있다. 개발자가 애플리케이션 구동을 위해 직접 작성한 대부분의 클래스는 이 애플리케이션 클래스 로더에 의해 로딩된다.
 
 ```Java
 // sun.misc.Launcher.AppClassLoader
@@ -104,11 +122,11 @@ static class AppClassLoader extends URLClassLoader {
 
 ---
 
-#### 4. 클래스로더 확인
+#### 4. 확인
 클래스 인스턴스를 통해 호출할 수 있는 `getClassLoader()` 메서드를 통해 해당 클래스를 로드한 클래스 로더 정보를 취득할 수 있다.
 
 ##### 1. 코드
-```Java
+```java
 public class Main {
     public static void main(String[] args) {
         // 부트스트랩 클래스 로더
@@ -118,7 +136,7 @@ public class Main {
         System.out.println("BinaryNode's classloader: " + BinaryNode.class.getClassLoader());
 
         // 애플리케이션 클래스 로더
-        System.out.println("Classloader's classloader: " + Classloader.class.getClassLoader());    
+        System.out.println("Classloader's classloader: " + Classloader.class.getClassLoader());
     }
 }
 ```
@@ -132,12 +150,12 @@ Classloader's classloader: sun.misc.Launcher$AppClassLoader@73d16e93
 - `Object` 클래스는 코드는 `null`을 반환하는데, 이는 부트스트랩 클래스 로더에서 로딩된 클래스임을 나타낸다. 
 - 부트스트랩 클래스 로더는 네이티브 코드로 작성되어 있어서 자바 언어 레벨에서 직접 접근할 수 없기 때문에, 이 클래스 로더는 Java 언어 레벨에서는 직접적으로 확인할 수 없다. 
 즉, `getClassLoader()` 메서드가 `null`을 반환하는 것은 해당 클래스가 부트스트랩 클래스 로더에 의해 로딩되었음을 나타내는 관례이다.
-- `BinaryNode` 클래스는 JAVA8에서 제공하는 확장 기능인 `${JAVA_HOME}\jre\lib\ext\Nashorn.jar` 라이브러리에 포함되어 있으며, 확장 클래스로더를 통해 로드된다.
-- `Classloader` 클래스는 직접 구현한 클래스로 애플리케이션 클래스로더를 통해 로드된 것을 확인할 수 있다.
+- `BinaryNode` 클래스는 JAVA8에서 제공하는 확장 기능인 `${JAVA_HOME}\jre\lib\ext\Nashorn.jar` 라이브러리에 포함되어 있으며, 확장 클래스 로더를 통해 로드된다.
+- `Classloader` 클래스는 직접 구현한 클래스로 애플리케이션 클래스 로더를 통해 로드된 것을 확인할 수 있다.
 
 ---
 
-## 2. Java 9 이후
+## 4. Java 9 이후 구조
 자바 9 이상의 버전의 클래스 로더는 다음의 요소들로 구성된다.
 - 부트스트랩 클래스 로더
 - 플랫폼 클래스 로더
@@ -179,7 +197,7 @@ private static class PlatformClassLoader extends BuiltinClassLoader {
 ---
 
 #### 3. 시스템 클래스 로더 (System ClassLoader)
-시스템 클래스로더 또한 기존에는 `URLClassLoader`를 상속하고 있었으나, `BuiltinClassLoader`를 상속하는 내부 클래스로 변경되었다.
+시스템 클래스 로더 또한 기존에는 `URLClassLoader`를 상속하고 있었으나, `BuiltinClassLoader`를 상속하는 내부 클래스로 변경되었다.
 
 `Java SE`나 `JDK` 모듈이 아닌 모듈들을 로딩하는 역할을 수행한다.
 
@@ -196,12 +214,11 @@ private static class AppClassLoader extends BuiltinClassLoader {
 
 ---
 
-#### 4. 클래스로더 확인
+#### 4. 확인
 클래스 인스턴스를 통해 호출할 수 있는 `getClassLoader()` 메서드를 통해 해당 클래스를 로드한 클래스 로더 정보를 취득할 수 있다.
 
-
 ##### 1. 코드
-```Java
+```java
 public class Main {
     public static void main(String[] args) {
         // 부트스트랩 클래스 로더
@@ -224,13 +241,15 @@ Classloader's classloader: jdk.internal.loader.ClassLoaders$AppClassLoader@14514
 ```
 
 - 부트스트랩 클래스 로더에 의해 로드되는 `Object`뿐만 아니라 플랫폼 클래스 로더에 의해 로드되는 `Scanner` 클래스 또한 값을 `null`을 반환하는 것을 확인할 수 있었다.
-- `Classloader` 클래스는 직접 구현한 클래스로 애플리케이션 클래스로더를 통해 로드된 것을 확인할 수 있다.
+- `Classloader` 클래스는 직접 구현한 클래스로 시스템 클래스 로더를 통해 로드된 것을 확인할 수 있다.
 
 ---
 #### ▶ Reference
+- [[1주차] JVM은 무엇이며 자바 코드는 어떻게 실행하는 것인가.](https://catsbi.oopy.io/df0df290-9188-45c1-b056-b8fe032d88ca)
 - [자바 클래스패스(classpath)란?](https://effectivesquid.tistory.com/entry/자바-클래스패스classpath란)
-- [자바의 클래스로더 알아보기](https://leeyh0216.github.io/posts/java_class_loader/)
+- [자바의 클래스 로더 알아보기](https://leeyh0216.github.io/posts/java_class_loader/)
 - [[JAVA] Java의 클래스 로딩](https://co-no.tistory.com/103)
+- [[Java] JVM의 클래스 로더란?](https://steady-coding.tistory.com/593)
 - [Why do we use rt.jar in a java project?](https://stackoverflow.com/questions/3091040/why-do-we-use-rt-jar-in-a-java-project)
 - [Stock JDK classes and the "null" ClassLoader?](https://stackoverflow.com/questions/8450624/stock-jdk-classes-and-the-null-classloader)
 - [sun.boot.class.path and java.ext.dirs were removed in JDK 9](https://github.com/tobias/clojure-java-9/issues/9)
