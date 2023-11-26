@@ -78,7 +78,7 @@ jar -tf rt.jar
 Boot Class Path: null
 ```
 
-하지만, 같은 코드를 자바 9 이상의 버전에서는 `null`을 반환할 뿐이다. 그 이유는 자바 플랫폼의 개선 및 보안 강화와 관련이 있다.
+하지만, 같은 코드를 자바 9 이상의 버전에서 실행하면 `null`을 반환할 뿐이다. 그 이유는 자바 플랫폼의 개선 및 보안 강화와 관련이 있다.
 부트 클래스 패스를 조작할 수 있기에 특정 클래스들을 변경하거나 재정의하는 데 사용될 수 있어 보안과 호환성 문제를 발생시킬 여지가 존재한다.
 
 그렇기에, 이러한 옵션을 제거하고 `--patch-module` 옵션을 도입함으로써 모듈 시스템을 통해 더욱 안전하고 유연한 클래스 패스 구성이 가능하도록 구조를 변경한 것이다.
@@ -99,7 +99,7 @@ Boot Class Path: null
 부트스트랩 클래스 로더가 Native C로 구현되어 있는 것과 달리 자바 코드로 구현되어 있다.
 `java.ext.dirs` 환경변수에 설정된 디렉토리의 클래스 파일을 로드하고, 이 값이 설정되어 있지 않은 경우 `${JAVA_HOME}/jre/lib/ext`에 있는 클래스 파일을 로드한다.
 
-```Java
+```java
 // sun.misc.Launcher.ExtClassLoader
 static class ExtClassLoader extends URLClassLoader {
     // ...
@@ -112,7 +112,7 @@ static class ExtClassLoader extends URLClassLoader {
 애플리케이션 클래스 로더는 `-classpath`나 JAR 파일 안에 있는 Manifest 파일의 classpath 속성 값으로 지정된 폴더에 있는 클래스를 로딩한다.
 확장 클래스 로더와 마찬가지로 자바로 구현되어 있다. 개발자가 애플리케이션 구동을 위해 직접 작성한 대부분의 클래스는 이 애플리케이션 클래스 로더에 의해 로딩된다.
 
-```Java
+```java
 // sun.misc.Launcher.AppClassLoader
 static class AppClassLoader extends URLClassLoader {
     // ...
@@ -146,11 +146,11 @@ Object's classloader: null
 BinaryNode's classloader: sun.misc.Launcher$ExtClassLoader@58372a00
 Classloader's classloader: sun.misc.Launcher$AppClassLoader@73d16e93
 ```
-- `Object` 클래스는 코드는 `null`을 반환하는데, 이는 부트스트랩 클래스 로더에서 로딩된 클래스임을 나타낸다. 
-- 부트스트랩 클래스 로더는 네이티브 코드로 작성되어 있어서 자바 언어 레벨에서 직접 접근할 수 없기 때문에, 이 클래스 로더는 Java 언어 레벨에서는 직접적으로 확인할 수 없다. 
+- `Object` 클래스가 `null`을 반환하는데, 이는 부트스트랩 클래스 로더를 통해 로딩된 클래스임을 나타낸다. 
+- 부트스트랩 클래스 로더는 네이티브 코드로 작성되어 있어서 자바 언어 레벨에서 직접 접근할 수 없기 때문에, Java 언어 레벨에서의 직접적인 호출은 불가능하다.
 즉, `getClassLoader()` 메서드가 `null`을 반환하는 것은 해당 클래스가 부트스트랩 클래스 로더에 의해 로딩되었음을 나타내는 관례이다.
 - `BinaryNode` 클래스는 JAVA8에서 제공하는 확장 기능인 `${JAVA_HOME}\jre\lib\ext\Nashorn.jar` 라이브러리에 포함되어 있으며, 확장 클래스 로더를 통해 로드된다.
-- `Classloader` 클래스는 직접 구현한 클래스로 애플리케이션 클래스 로더를 통해 로드된 것을 확인할 수 있다.
+- 직접 구현한 클래스인 `Classloader` 클래스는 애플리케이션 클래스 로더를 통해 로드된 것을 확인할 수 있다.
 
 ---
 
@@ -239,8 +239,8 @@ Scanner's classloader: null
 Classloader's classloader: jdk.internal.loader.ClassLoaders$AppClassLoader@14514713
 ```
 
-- 부트스트랩 클래스 로더에 의해 로드되는 `Object`뿐만 아니라 플랫폼 클래스 로더에 의해 로드되는 `Scanner` 클래스 또한 값을 `null`을 반환하는 것을 확인할 수 있었다.
-- `Classloader` 클래스는 직접 구현한 클래스로 시스템 클래스 로더를 통해 로드된 것을 확인할 수 있다.
+- 부트스트랩 클래스 로더에 의해 로드되는 `Object`뿐만 아니라 플랫폼 클래스 로더에 의해 로드되는 `Scanner` 클래스 또한 `null`을 반환하는 것을 확인할 수 있었다.
+- 직접 구현한 `Classloader` 클래스는 시스템 클래스 로더를 통해 로드된 것을 확인할 수 있다.
 
 ---
 #### ▶ Reference
