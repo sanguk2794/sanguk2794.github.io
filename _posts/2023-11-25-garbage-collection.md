@@ -63,7 +63,7 @@ public class GarbageCollection {
 }
 ~~~
 
-- "안녕하세요" 인스턴스를 생성하고, 해당 인스턴스를 가리키는 `str` 참조 변수를 생성한다. 호출 스택에 저장되는 `str` 참조변수는 힙 영역의 "안녕하세요" 인스턴스를 가리킨다.
+- "안녕하세요" 인스턴스를 생성하고, 해당 인스턴스를 가리키는 `str` 참조 변수를 생성한다. 호출 스택에 저장되는 `str` 참조 변수는 힙 영역의 "안녕하세요" 인스턴스를 가리킨다.
 
 ![Garbage Collection_1](https://drive.google.com/uc?export=view&id=15OP50EH2oWPZiiPn6T6XcotzQb26BeZ8 )
 
