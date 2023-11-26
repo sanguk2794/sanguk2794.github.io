@@ -40,13 +40,13 @@ tags: [Java]
 
 ---
 
-#### 1. 부트스트랩 클래스 로더 (Bootstrap ClassLoader)
+### 1. 부트스트랩 클래스 로더 (Bootstrap ClassLoader)
 부트스트랩 클래스 로더는 최상위 클래스 로더이며, 원시 클래스 로더(Primordial classloader)라고도 불린다.
 
 이 클래스 로더는 JVM 시작 시 가장 최초로 실행되어 JVM 실행을 위한 자바 클래스와 `${JAVA_HOME}/jre/lib`에 위치한 자바 런타임 코어 클래스 등을 로드한다.
 해당 코어 클래스 목록은 `sun.boot.class.path`라는 자바 내부적으로 사용되는 환경 변수를 통해 정의된다.
 
-##### 1. 코드
+#### 1. 코드
 ```java
 public class Main {
     public static void main(String[] args) {
@@ -55,7 +55,7 @@ public class Main {
 }
 ```
 
-##### 2. 결과
+#### 2. 결과
 이 결과는 JDK 버전 및 환경에 따라 다르다.
 
 ```bash
@@ -63,7 +63,7 @@ public class Main {
 Boot Class Path: /Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home/jre/classes
 ```
 
-##### 3. rt.jar
+#### 3. rt.jar
 특히, 해당 리스트 안의 `jre/lib/rt.jar`는 자바를 실행하는데 기본이 되는 `java.lang` 패키지, `java.util` 등의 필수 패키지들이 포함된다.
 
 ```bash
@@ -72,7 +72,7 @@ jar -tf rt.jar
 
 ![TIOBE Index for November 2023](https://drive.google.com/uc?export=view&id=19ayAbyPbsjgOS_6SFrpYQCNZS9C5QFDW )
 
-##### 3. Java 9 버전 이후
+#### 4. Java 9 버전 이후
 ```bash
 # In JDK 11
 Boot Class Path: null
@@ -94,7 +94,7 @@ Boot Class Path: null
 
 ---
 
-#### 2. 확장 클래스 로더 (Extension ClassLoader)
+### 2. 확장 클래스 로더 (Extension ClassLoader)
 확장 클래스 로더는 부트스트랩 클래스 로더를 조상으로 가지는 클래스 로더로써 확장 자바 클래스들을 로드한다. 
 부트스트랩 클래스 로더가 Native C로 구현되어 있는 것과 달리 자바 코드로 구현되어 있다.
 `java.ext.dirs` 환경변수에 설정된 디렉토리의 클래스 파일을 로드하고, 이 값이 설정되어 있지 않은 경우 `${JAVA_HOME}/jre/lib/ext`에 있는 클래스 파일을 로드한다.
@@ -108,7 +108,7 @@ static class ExtClassLoader extends URLClassLoader {
 
 ---
 
-#### 3. 애플리케이션 클래스 로더 (Application Classloader)
+### 3. 애플리케이션 클래스 로더 (Application Classloader)
 애플리케이션 클래스 로더는 `-classpath`나 JAR 파일 안에 있는 Manifest 파일의 classpath 속성 값으로 지정된 폴더에 있는 클래스를 로딩한다.
 확장 클래스 로더와 마찬가지로 자바로 구현되어 있다. 개발자가 애플리케이션 구동을 위해 직접 작성한 대부분의 클래스는 이 애플리케이션 클래스 로더에 의해 로딩된다.
 
@@ -121,10 +121,10 @@ static class AppClassLoader extends URLClassLoader {
 
 ---
 
-#### 4. 확인
+### 4. 확인
 클래스 인스턴스를 통해 호출할 수 있는 `getClassLoader()` 메서드를 통해 해당 클래스를 로드한 클래스 로더 정보를 취득할 수 있다.
 
-##### 1. 코드
+#### 1. 코드
 ```java
 public class Main {
     public static void main(String[] args) {
@@ -140,7 +140,7 @@ public class Main {
 }
 ```
 
-##### 2. 결과
+#### 2. 결과
 ```bash
 Object's classloader: null
 BinaryNode's classloader: sun.misc.Launcher$ExtClassLoader@58372a00
@@ -162,7 +162,7 @@ Classloader's classloader: sun.misc.Launcher$AppClassLoader@73d16e93
 
 ---
 
-#### 1. 부트스트랩 클래스 로더 (Bootstrap ClassLoader)
+### 1. 부트스트랩 클래스 로더 (Bootstrap ClassLoader)
 기존에는 모든 Java SE 클래스들을 로드하는 역할을 담당했으나, `rt.jar`가 모듈화 되어 작은 단위로 나뉘면서 `java.lang.Object`, `java.io.Serializable`, `java.lang.ClassLoader` 등 JVM 동작에 필수적인 클래스들만을 로드하도록 역할이 축소되었다.
 
 ```java
@@ -178,7 +178,7 @@ private static class BootClassLoader extends BuiltinClassLoader {
 
 ---
 
-#### 2. 플랫폼 클래스 로더 (Platform ClassLoader)
+### 2. 플랫폼 클래스 로더 (Platform ClassLoader)
 기존에는 `URLClassLoader`를 상속하고 있었으나, `BuiltinClassLoader`를 상속하는 내부 클래스로 변경되었다.
 더이상 `jre/lib/ext`, `java.ext.dirs`를 지원하지 않지만 `Java SE`의 모든 클래스 및 `Java SE`에는 없지만 JCP(Java Community Process)에 의해 표준화된 모듈 내의 클래스를 로드함으로써, `Java 8`에 비해 로드할 수 있는 범위가 확장되었다.
 
@@ -195,7 +195,7 @@ private static class PlatformClassLoader extends BuiltinClassLoader {
 
 ---
 
-#### 3. 시스템 클래스 로더 (System ClassLoader)
+### 3. 시스템 클래스 로더 (System ClassLoader)
 시스템 클래스 로더 또한 기존에는 `URLClassLoader`를 상속하고 있었으나, `BuiltinClassLoader`를 상속하는 내부 클래스로 변경되었다.
 
 `Java SE`나 `JDK` 모듈이 아닌 모듈들을 로딩하는 역할을 수행한다.
@@ -213,10 +213,10 @@ private static class AppClassLoader extends BuiltinClassLoader {
 
 ---
 
-#### 4. 확인
+### 4. 확인
 클래스 인스턴스를 통해 호출할 수 있는 `getClassLoader()` 메서드를 통해 해당 클래스를 로드한 클래스 로더 정보를 취득할 수 있다.
 
-##### 1. 코드
+#### 1. 코드
 ```java
 public class Main {
     public static void main(String[] args) {
@@ -232,7 +232,7 @@ public class Main {
 }
 ```
 
-##### 2. 결과
+#### 2. 결과
 ```bash
 Object's classloader: null
 Scanner's classloader: null
