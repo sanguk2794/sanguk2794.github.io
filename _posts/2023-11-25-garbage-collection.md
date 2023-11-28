@@ -34,10 +34,8 @@ C를 통해 애플리케이션을 구현하는 경우, OS의 메모리를 직접
 
 ### 2. 가비지 컬렉션의 동작 방식
 자바에서의 가비지 컬렉션은 힙 영역의 영 영역과 올드 영역에 따라 세부 동작이 다르나, 다음의 2가지 공통적인 단계를 따르게 된다.
-~~~
 - Stop The World
 - Mark and Sweep
-~~~
 
 `Stop The World`는 가비지 컬렉션을 실행하기 위해 JVM이 애플리케이션의 실행을 멈추는 작업이다.
 가비지 컬렉션을 실행할 때, 가비지 컬렉션을 실행하는 쓰레드를 제외한 모든 쓰레드들의 작업이 중단되고 애플리케이션이 중지된다. 그리고, 가비지 컬렉션이 완료되면 작업이 재개된다.
@@ -54,14 +52,14 @@ C를 통해 애플리케이션을 구현하는 경우, OS의 메모리를 직접
 가비지 컬렉션의 종류를 2가지로 나눔으로써, `Stop The World` 시간을 구분해 실행할 수 있어졌고, 이는 JVM의 성능 향상에 기여했다.
 
 ### 4. 가비지 컬렉션 예제
-~~~java
+```java
 public class GarbageCollection {
     public static void main(String[] args) {
         String str = "안녕하세요";
         str = "안녕히 계세요";
     }
 }
-~~~
+```
 
 - "안녕하세요" 인스턴스를 생성하고, 해당 인스턴스를 가리키는 `str` 참조 변수를 생성한다. 호출 스택에 저장되는 `str` 참조 변수는 힙 영역의 "안녕하세요" 인스턴스를 가리킨다.
 
@@ -79,25 +77,25 @@ public class GarbageCollection {
 --- 
 
 ## 3. 가비지 컬렉션 실행
-~~~java
+```java
 public class GarbageCollection {
     public static void main(String[] args) {
         System.gc();
     }
 }
-~~~
+```
 
 `System.gc()`를 호출하여 명시적으로 가비지 컬렉션을 실행하도록 코드를 작성할 수 있지만, 모든 스레드가 중단되기 때문에 직접 호출하지 않는 것이 좋다.
 
 --- 
 
 ## 4. Object.finalize()
-~~~java
+```java
 public class Object {
     @Deprecated(since="9")
     protected void finalize() throws Throwable { }
 }
-~~~ 
+``` 
 
 메모리 누수를 방지하기 위해 가비지 컬렉션이 수행될 때 더 이상 사용하지 않는 자원에 대한 정리 작업을 진행하기 위해 호출되는 종료자 메서드이다.
 하지만, 종료자인 `finalizer()`는 예측할 수 없고, 상황에 따라 위험할 수 있어 일반적으로 불필요하며, 오동작, 낮은 성능, 이식성 문제의 원인이 되기도 하기 때문에 사용하지 않는 것이 권장된다. 실제로 자바 9에서 deprecated API로 지정되었다.
@@ -106,16 +104,16 @@ public class Object {
 
 ### 1. java.lang.ref.Cleaner
 자바 9에서 도입된 소멸자로 생성된 `Cleaner`가 더 이상 사용되지 않을 때 등록된 스레드에서 정의된 클린 작업을 수행한다.
-~~~java
+```java
 package java.lang.ref;
 
 public final class Cleaner {
     // ...
 }
-~~~ 
+``` 
 
 명시적으로 `clean()`을 수행할 수도 있다. 보통 `AutoCloseable`을 구현해서 `try-with-resource`와 함께 사용한다.
-~~~java
+```java
 public class CleaningExample implements AutoCloseable {
     private final Resource resource;
     private final Cleaner cleaner;
@@ -151,7 +149,7 @@ public class CleaningExample implements AutoCloseable {
         }
     }
 }
-~~~ 
+``` 
 
 하지만, `Cleaner` 또한 `finalizer()`보다는 덜 위험하지만, 여전히 예측할 수 없고, 느리고, 일반적으로 불필요하다.
 

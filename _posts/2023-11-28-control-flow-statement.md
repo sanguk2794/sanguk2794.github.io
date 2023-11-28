@@ -21,7 +21,7 @@ tags: [Java]
 ### 1. if
 `if`는 조건식과 블럭만으로 이루어지는 조건문이다. 조건식의 결과에 따라서 블럭의 실행 여부가 결정된다.
 
-```java
+```text
 if (조건식) {
     // 조건식이 참을 반환할 경우 실행
 }
@@ -45,7 +45,7 @@ public class Main {
 ### 2. if-else
 조건식의 결과값은 `boolean`이다. `true`일 경우 `if` 블럭을 실행하며, `false`일 경우 `else` 블럭을 실행한다.
 
-```java
+```text
 if (조건식) {
     // 조건식이 true를 반환할 경우 실행
         
@@ -75,7 +75,7 @@ public class Main {
 조건식의 결과가 `false`일 경우 다음 `else if` 블럭의 조건을 확인한다. 
 이 블럭 조건식의 확인은 `true`를 반환하는 `if-else` 구문이 나오거나 `else` 구문과 만나거나 조건식에서 벗어날 때까지 계속된다.
 
-```java
+```text
 if (조건식) {
     // 조건식이 true를 반환할 경우 실행
         
@@ -126,6 +126,7 @@ public class Main {
 ---
 ### 4. 중첩 if
 `if` 블록 내부에 또 다른 `if`를 사용하는 것을 말한다. 중첩의 횟수에는 거의 제한이 없다.
+
 ```java
 public class Main {
     public void conditionalStatements() {
@@ -144,7 +145,7 @@ public class Main {
 ### 5. switch
 `switch`는 조건식과 `case`, `default`로 이루어지는 조건문이다. 조건식의 결과에 따라서 실행 블럭이 결정된다.
 
-```java
+```text
 switch (조건식) {
     case 결과값1:
         // 조건식의 결과값이 결과값1일 경우 실행
@@ -218,7 +219,7 @@ public class Main {
 ### 1. for
 `for`은 초기화, 조건식, 증감식을 기준으로 블럭을 여러 번 반복해서 실행할 때 사용한다.
 
-```java
+```text
 for (초기식; 조건식; 증감식) {
     // 조건식이 true일경우 반복해서 실행
 }
@@ -250,7 +251,7 @@ public class Main {
 ### 2. 중첩 for
 `for` 안에 또 다른 `for`를 포함시키는 것이 가능하다. 그리고 이 중첩의 횟수는 거의 제한이 없다.
 
-```java
+```text
 for (초기식; 조건식; 증감식) {
     // 조건식이 true일경우 반복해서 실행
 
@@ -280,7 +281,8 @@ public class Main {
 --- 
 ### 3. foreach
 JDK 1.5부터 배열과 컬렉션에 저장된 요소에 접근할 때 보다 편리한 방법으로 처리할 수 있도록 `for`의 새로운 용법이 추가되었다. 그것이 바로 `foreach`이다. 
-```java
+
+```text
 for (E element : 배열 또는 컬렉션) {
     // element 사용 가능
 }
@@ -303,7 +305,8 @@ public class Main {
 
 ### 4. while
 조건식이 `true`이면 블럭 내의 문장을 실행하고, `false`이면 해당 반복문을 벗어난다. 
-```java
+
+```text
 while (조건문) {
     // 해당 구현을 반복
 }
@@ -327,13 +330,14 @@ public class Main {
 ### 5. do-while
 `while`의 변형으로 기본적인 구조는 `while`과 같으나 조건식과 블럭의 순서를 바꿔놓았다.
 
-```java
+```text
 do {
     // while의 결과값이 false더라도 최소 한 번은 실행될 것이 보장된다.
 } while (false);
 ```
 
 `while`과 구분되는 점은 조건식을 고려하지 않고 최소한 한 번의 반복을 수행한다는 것이다.
+
 ```java
 public class Main {
     private void doWhileLoop() {
@@ -353,6 +357,7 @@ public class Main {
 ---
 ### 7. 이름 붙인 반복문
 반복문에 이름을 붙이는 것이 가능하다. 반복문에 붙인 이름을 이용해 지정한 반복문을 벗어날 수 있다.
+
 ```java
 public class Main {
     public static void namedFor() {

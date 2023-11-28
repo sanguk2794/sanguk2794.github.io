@@ -20,7 +20,7 @@ tags: [Java]
 
 ### 1. 코드
 아래는 호출 스택을 확인하기 위한 간단한 예제이다.
-~~~java
+```java
 public class CallStack {
 
     // main()
@@ -41,7 +41,7 @@ public class CallStack {
         System.out.println("print!");
     }
 }
-~~~
+```
 
 ### 2. 동작 확인
 - `main()` 메서드가 실행되면 호출 스택에 `main()` 메서드의 프레임이 추가된다. 
