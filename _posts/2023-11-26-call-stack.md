@@ -61,6 +61,6 @@ public class CallStack {
 ---
 #### ▶ Reference
 - [[Java] OOP_호출 스택(Call Stack)](https://velog.io/@jeong11/Java-OOP-callstack)
-- 남궁성, 『자바의 정석』, 도우출판
+- 남궁성, 자바의 정석, 도우출판
 
 ---
