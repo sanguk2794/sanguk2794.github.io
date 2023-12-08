@@ -5,10 +5,7 @@ title: >
 tags: [Java]
 ---
 
-# 제어문 (Control Flow Statement)
-
---- 
-## 1. 제어문
+## 1. 제어문 (Control Flow Statement)
 프로그램의 흐름을 바꾸는 문장들을 제어문이라고 한다. 제어문에는 조건문과 반복문이 포함된다.
 - 조건문 : if, switch
 - 반복문 : for, while

@@ -5,10 +5,6 @@ title: >
 tags: [Java]
 ---
 
-# 가비지 컬렉션 (Garbage Collection)
-
----
-
 ## 1. C와 자바의 메모리 관리
 가비지 컬렉션을 이해하기 위해서는 가비지 컬렉션을 제공하지 않는 언어(대표적으로 C)와 가비지 컬렉션을 제공하는 언어(대표적으로 자바)의 메모리 관리 방법을 이해해야 한다.
 
@@ -20,8 +16,7 @@ C를 통해 애플리케이션을 구현하는 경우, OS의 메모리를 직접
 즉, 해당 프로그램의 실패가 다른 프로그램에 영향을 주지 않는다.
 
 --- 
-
-## 2. 가비지 컬렉션
+## 2. 가비지 컬렉션 (Garbage Collection)
 가비지 컬렉션이란 더 이상 사용할 수 없게 된 인스턴스들을 가비지 컬렉터가 자동으로 메모리에서 해제해주는 작업을 말한다.
 메모리 관리라는 까다로운 부분을 JVM의 가비지 컬렉터가 대신 수행해주는 것이다.
 
@@ -75,7 +70,6 @@ public class GarbageCollection {
 ![Garbage Collection_3](https://drive.google.com/uc?export=view&id=1uyZR8e6AhE2g8oZBwIzo6eHlvWP0Vu-m )
 
 --- 
-
 ## 3. 가비지 컬렉션 실행
 ```java
 public class GarbageCollection {

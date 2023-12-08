@@ -5,10 +5,6 @@ title: >
 tags: [Java]
 ---
 
-# 클래스 로더
-
----
-
 ## 1. 클래스 로더 (ClassLoader)
 클래스 로더는 JRE의 일부로써 런타임에 컴파일 된 자바의 클래스 파일을 동적으로 로드하는 역할을 담당한다.
 자바 클래스들은 시작 시 한번에 로드되지 않고 애플리케이션에서 필요할 때 로드된다.
@@ -18,7 +14,6 @@ tags: [Java]
 참조 : [[1주차] JVM은 무엇이며 자바 코드는 어떻게 실행하는 것인가.](https://catsbi.oopy.io/df0df290-9188-45c1-b056-b8fe032d88ca)
 
 ---
-
 ## 2. Java 8 이전 구조
 자바 클래스 로더는 모듈 시스템이 도입되기 이전인 자바 8 이전 버전과 자바 9 이후 버전의 구조가 다르다. 자바 8 이하 버전에서의 클래스 로더는 다음의 요소들로 구성된다.
 - 부트스트랩 클래스 로더
@@ -26,7 +21,6 @@ tags: [Java]
 - 애플리케이션 클래스 로더
 
 ---
-
 ### 1. 부트스트랩 클래스 로더 (Bootstrap ClassLoader)
 부트스트랩 클래스 로더는 최상위 클래스 로더이며, 원시 클래스 로더(Primordial classloader)라고도 불린다.
 
@@ -81,7 +75,6 @@ Boot Class Path: null
 참조 : [sun.boot.class.path and java.ext.dirs were removed in JDK 9](https://github.com/tobias/clojure-java-9/issues/9)
 
 ---
-
 ### 2. 확장 클래스 로더 (Extension ClassLoader)
 확장 클래스 로더는 부트스트랩 클래스 로더를 조상으로 가지는 클래스 로더로써 확장 자바 클래스들을 로드한다. 
 부트스트랩 클래스 로더가 Native C로 구현되어 있는 것과 달리 자바 코드로 구현되어 있다.
@@ -95,7 +88,6 @@ static class ExtClassLoader extends URLClassLoader {
 ```
 
 ---
-
 ### 3. 애플리케이션 클래스 로더 (Application Classloader)
 애플리케이션 클래스 로더는 `-classpath`나 JAR 파일 안에 있는 Manifest 파일의 classpath 속성 값으로 지정된 폴더에 있는 클래스를 로딩한다.
 확장 클래스 로더와 마찬가지로 자바로 구현되어 있다. 개발자가 애플리케이션 구동을 위해 직접 작성한 대부분의 클래스는 이 애플리케이션 클래스 로더에 의해 로딩된다.
@@ -108,7 +100,6 @@ static class AppClassLoader extends URLClassLoader {
 ```
 
 ---
-
 ### 4. 확인
 클래스 인스턴스를 통해 호출할 수 있는 `getClassLoader()` 메서드를 통해 해당 클래스를 로드한 클래스 로더 정보를 취득할 수 있다.
 
@@ -149,7 +140,6 @@ Classloader's classloader: sun.misc.Launcher$AppClassLoader@73d16e93
 - 시스템 클래스 로더
 
 ---
-
 ### 1. 부트스트랩 클래스 로더 (Bootstrap ClassLoader)
 기존에는 모든 Java SE 클래스들을 로드하는 역할을 담당했으나, `rt.jar`가 모듈화 되어 작은 단위로 나뉘면서 `java.lang.Object`, `java.io.Serializable`, `java.lang.ClassLoader` 등 JVM 동작에 필수적인 클래스들만을 로드하도록 역할이 축소되었다.
 
@@ -165,7 +155,6 @@ private static class BootClassLoader extends BuiltinClassLoader {
 ```
 
 ---
-
 ### 2. 플랫폼 클래스 로더 (Platform ClassLoader)
 기존에는 `URLClassLoader`를 상속하고 있었으나, `BuiltinClassLoader`를 상속하는 내부 클래스로 변경되었다.
 더이상 `jre/lib/ext`, `java.ext.dirs`를 지원하지 않지만 `Java SE`의 모든 클래스 및 `Java SE`에는 없지만 JCP(Java Community Process)에 의해 표준화된 모듈 내의 클래스를 로드함으로써, `Java 8`에 비해 로드할 수 있는 범위가 확장되었다.
@@ -182,7 +171,6 @@ private static class PlatformClassLoader extends BuiltinClassLoader {
 ```
 
 ---
-
 ### 3. 시스템 클래스 로더 (System ClassLoader)
 시스템 클래스 로더 또한 기존에는 `URLClassLoader`를 상속하고 있었으나, `BuiltinClassLoader`를 상속하는 내부 클래스로 변경되었다.
 
@@ -200,7 +188,6 @@ private static class AppClassLoader extends BuiltinClassLoader {
 ```
 
 ---
-
 ### 4. 확인
 클래스 인스턴스를 통해 호출할 수 있는 `getClassLoader()` 메서드를 통해 해당 클래스를 로드한 클래스 로더 정보를 취득할 수 있다.
 
@@ -231,7 +218,6 @@ Classloader's classloader: jdk.internal.loader.ClassLoaders$AppClassLoader@14514
 - 직접 구현한 `Classloader` 클래스는 시스템 클래스 로더를 통해 로드된 것을 확인할 수 있다.
 
 ---
-
 ## 4. 클래스 로더의 동작 방식
 계층 구조를 바탕으로 클래스 로더끼리 로드를 위임하는 구조로 동작한다. 클래스를 로드할 때 먼저 상위 클래스 로더를 확인하여 상위 클래스 로더에 있다면 해당 클래스를 사용하고 없다면 로드를 요청받은 클래스로더가 클래스를 로드한다.
 

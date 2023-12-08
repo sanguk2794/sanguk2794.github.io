@@ -5,10 +5,7 @@ title: >
 tags: [Java]
 ---
 
-# 객체 지향 프로그래밍 (OOP, Object-Oriented Programming)
-
----
-## 1. 객체 지향 프로그래밍
+## 1. 객체 지향 프로그래밍 (OOP, Object-Oriented Programming)
 프로그램 설계 방법론이자 개념의 일종이다.
 
 실제 사물의 속성과 기능을 분석해 변수와 메서드로 정의함으로써, 실제 세계를 컴퓨터 속의 가상 세계로 재창조하는 프로그래밍 기법을 말한다.
