@@ -115,7 +115,9 @@ public class Engineer {
 
 재정의중이 아닌 메서드에 해당 어노테이션을 붙일 경우 컴파일 에러가 발생한다.
 
-> Method does not override method from its superclass
+```text
+Method does not override method from its superclass
+```
 
 ```java
 public class Engineer {

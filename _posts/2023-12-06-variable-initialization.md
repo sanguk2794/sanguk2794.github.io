@@ -57,12 +57,12 @@ public class InitializationBlock {
     private int serialNumber;
     private Point point;
 
-    // 클래스 초기화 블럭 -> 메모리에 처음 적재될 때 한 번만 실행된다.
+    // 클래스 초기화 블럭 : 메모리에 처음 적재될 때 한 번만 실행된다.
     static {
         sequence = 1;
     }
     
-    // 인스턴스 초기화 블럭 -> 인스턴스 생성시 실행된다.
+    // 인스턴스 초기화 블럭 : 인스턴스 생성시 실행된다.
     {
         serialNumber = sequence++;
     }
@@ -90,7 +90,7 @@ public class Constructor {
     private int serialNumber;
     private Point point;
 
-    // 생성자 -> 인스턴스 생성시 실행된다.
+    // 생성자 : 인스턴스 생성시 실행된다.
     public Constructor(int serialNumber, Point point) {
         this.serialNumber = serialNumber;
         this.point = point;

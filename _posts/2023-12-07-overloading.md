@@ -86,7 +86,9 @@ public void foo(int a1, int a2, int a4, int... rest) {}
 가변인자를 매개변수로 선언할 때, 가변인자 이외의 매개변수가 존재한다면 가변인자를 매개변수 중 제일 마지막에 선언해야 한다.
 그렇지 않으면 들어온 파라미터가 가변인자인지 아닌지 구분할 수 있는 방법이 없기 때문에 컴파일 에러가 발생한다.
 
-> Vararg parameter must be the last in the list
+```text
+Vararg parameter must be the last in the list
+```
 
 ```java
 public class Overloading {
@@ -117,7 +119,9 @@ public class Overloading {
 이 때, 컴파일러는 두 메서드의 시그니처가 다르기 때문에 선언만으로는 컴파일 에러를 발생시키지 않는다.
 하지만, 실제 이 애매한 메서드를 호출할 경우 어떤 메서드를 사용할 것인지 컴파일러는 파악할 수 없고 이로 인해 컴파일 에러가 발생한다.
 
-> Ambiguous method call
+```text
+Ambiguous method call
+```
 
 ```java
 public class Overloading {

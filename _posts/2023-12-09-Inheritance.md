@@ -16,6 +16,7 @@ tags: [Java]
 ```
 
 실제 `extends`를 명시적으로 추가한 아래의 두 클래스를 표현할 때, 두 클래스가 서로 상속 관계에 있다고 표현한다.
+
 ```java
 public class Parent { }
 public class Child extends Parent { }
@@ -116,6 +117,7 @@ public class SubClass extends SuperClass { //, SuperClass2
 출처 : [자바는 왜 다중 상속을 지원하지 않을까? (다이아몬드 문제)](https://siyoon210.tistory.com/125)
 
 이를 코드로 나타내면 다음과 같은 모습이 된다.
+
 ```java
 class Father {
     @Override
@@ -162,8 +164,8 @@ class Son implements Father, Mother {
 }
 ```
 
-### 3. default method
-사실 자바 1.8에서 디폴트 메서드가 추가되었기 때문에, 인터페이스도 코드 구현이 가능하다. 이 경우에는 해당 클래스를 하위 클래스에서 재정의하지 않는 이상 컴파일 에러가 발생한다.
+### 2. default method
+사실 자바 1.8에서 디폴트 메서드가 추가되었기 때문에 인터페이스도 코드 구현이 가능하다. 이 경우에는 해당 클래스를 하위 클래스에서 재정의하지 않는 이상 컴파일 에러가 발생한다.
 
 ---
 #### ▶ Reference
